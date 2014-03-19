@@ -91,7 +91,12 @@ table.gridtable td {
                        <td>${opportunity.getField("Type").value}</td>
                        <td>${opportunity.getField("location__c").value}</td>
                        <td>￥${opportunity.getField("Amount").value}</td>
-                       <td>${opportunity.getField("timeCompute__c").value}</td>
+                       <c:if test="${opportunity.getField('timeCompute__c').value == 'true'}">
+                       <td>あり</td>
+                       </c:if>
+                       <c:if test="${opportunity.getField('timeCompute__c').value == 'flase'}">
+                       <td>なし</td>
+                       </c:if>
                        <td>${opportunity.getField("computeLowestCon__c").value}</td>
                        <td>${opportunity.getField("computeTopCon__c").value}</td>
                        <td>${opportunity.getField("cost__c").value}</td>
