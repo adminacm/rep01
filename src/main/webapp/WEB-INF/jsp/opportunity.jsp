@@ -34,9 +34,9 @@ table.gridtable td {
         <div class="span8 offset2">
               <table class="gridtable">
                 <caption style="text-align:left;font-size:20px">案件管理一覧情報</caption>
-                    <thead>
+                    <thead style="text-align:center">
                    　　　　　　　　　　 <tr>
-                       <td>案件名</td>
+                       <td>案件名</td>	
                        <td>取引先</td>
                        <td>ステージ</td>
                        <td>案件確度</td>
@@ -66,50 +66,52 @@ table.gridtable td {
                        <td>プロジェクト責任者</td>
                        <td>備考</td>
                        <td>想定されるリスク</td>
+                       <td>開発ロケーション</td>
+                       <td>要求詳細</td>
                       </tr>
                     </thead>
                     <tbody>                     
                       <c:if test="${!empty opportunityList}">
                       <c:forEach var="opportunity" items="${opportunityList}" varStatus="status">
-                       <c:if test="${!status.last}">
                       <tr>
-                       <td>${opportunity.getField("Name").value}</td>
-                       <td>${opportunity.getField("AccountName__c").value}</td>
-                       <td>${opportunity.getField("StageName").value}</td>
-                       <td>${opportunity.getField("accuracy__c").value}%</td>
-                       <td>${opportunity.getField("contractForm__c").value}</td>
-                       <td>${opportunity.getField("contratLowChk__c").value}</td>
-                       <td>${opportunity.getField("CloseDate").value}</td> 
-                       <td>${opportunity.getField("proposalEndDay__c").value}</td>
-                       <td>${opportunity.getField("projectStartDate__c").value}</td>
-                       <td>${opportunity.getField("projectEndDate__c").value}</td>
-                       <td>${opportunity.getField("caseOccurPri__c").value}</td>
-                       <td>${opportunity.getField("clientUser__c").value}</td> 
-                       <td>${opportunity.getField("businessFlow__c").value}</td>
-                       <td>${opportunity.getField("Description").value}</td>
-                       <td>${opportunity.getField("industryCategory__c").value}</td>
-                       <td>${opportunity.getField("Type").value}</td>
-                       <td>${opportunity.getField("location__c").value}</td>
-                       <td>￥${opportunity.getField("Amount").value}</td>
-                       <c:if test="${opportunity.getField('timeCompute__c').value == 'true'}">
+                       <td>${opportunity.name}</td>
+                       <td>${opportunity.accountName}</td>
+                       <td>${opportunity.stageName}</td>
+                       <td>${opportunity.accuracy}%</td>
+                       <td>${opportunity.contractForm}</td>
+                       <td>${opportunity.contratLowChk}</td>
+                       <td>${opportunity.closeDate}</td> 
+                       <td>${opportunity.proposalEndDay}</td>
+                       <td>${opportunity.projectStartDate}</td>
+                       <td>${opportunity.projectEndDate}</td>
+                       <td>${opportunity.caseOccurPri}</td>
+                       <td>${opportunity.clientUser}</td> 
+                       <td>${opportunity.businessFlow}</td>
+                       <td>${opportunity.description}</td>
+                       <td>${opportunity.industryCategory}</td>
+                       <td>${opportunity.type}</td>
+                       <td>${opportunity.location}</td>
+                       <td>￥${opportunity.amount}</td>
+                       <c:if test="${opportunity.timeCompute == 'true'}">
                        <td>あり</td>
                        </c:if>
-                       <c:if test="${opportunity.getField('timeCompute__c').value == 'flase'}">
+                       <c:if test="${opportunity.timeCompute == 'flase'}">
                        <td>なし</td>
                        </c:if>
-                       <td>${opportunity.getField("computeLowestCon__c").value}</td>
-                       <td>${opportunity.getField("computeTopCon__c").value}</td>
-                       <td>${opportunity.getField("cost__c").value}</td>
-                       <td>${opportunity.getField("grossProfit__c").value}</td>
-                       <td>${opportunity.getField("TotalOpportunityQuantity").value}</td>
-                       <td>${opportunity.getField("paySight__c").value}</td>
-                       <td>${opportunity.getField("ownerName__c").value}</td>
-                       <td>${opportunity.getField("projectUndertaker__c").value}</td>
-                       <td>${opportunity.getField("projectResPerson__c").value}</td>
-                       <td>${opportunity.getField("demand__c").value}</td>
-                       <td>${opportunity.getField("anticipateRisk__c").value}
+                       <td>${opportunity.computeLowestCon}</td>
+                       <td>${opportunity.computeTopCon}</td>
+                       <td>${opportunity.cost}</td>
+                       <td>${opportunity.grossProfit}</td>
+                       <td>${opportunity.totalOpportunityQuantity}</td>
+                       <td>${opportunity.paySight}</td>
+                       <td>${opportunity.ownerName}</td>
+                       <td>${opportunity.projectUndertaker}</td>
+                       <td>${opportunity.projectResPerson}</td>
+                       <td>${opportunity.demand}</td>
+                       <td>${opportunity.anticipateRisk}</td>
+                       <td>${opportunity.outputDevelopLocationText}</td>
+                       <td>${opportunity.outputDemandDescriptionText}</td>
                       </tr>
-                      </c:if>
                     </c:forEach>
                     </c:if>                    
                     </tbody>
