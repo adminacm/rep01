@@ -6,6 +6,7 @@ import java.util.Iterator;
 import org.springframework.stereotype.Repository;
 
 import com.github.ryanbrainard.richsobjects.RichSObject;
+import com.github.ryanbrainard.richsobjects.RichSObject.RichField;
 import com.github.ryanbrainard.richsobjects.RichSObjectsService;
 import com.github.ryanbrainard.richsobjects.RichSObjectsServiceImpl;
 import com.opportunity.bean.DemandDescription;
@@ -33,64 +34,66 @@ public class OpportunityDaoImpl implements OpportunityDao {
 		String soalDemandDescription;
 		String opportunityId;
 		Opportunity opportunity;
+		String strAmount = "";
 		while (opportunityQueryResultItr.hasNext()) {
 
 			RichSObject opportunityObj = opportunityQueryResultItr.next();
 			opportunity = new Opportunity();
-			// 案件の開発ロケーションリストを初期化
-			ArrayList<DevelopLocation> developLocationList = new ArrayList<DevelopLocation>();
-			// 案件の要求詳細リストを初期化
-			ArrayList<DemandDescription> demandDescriptionList = new ArrayList<DemandDescription>();
-			DevelopLocation developLocation = null;
-			DemandDescription demandDescription = null;
+//			// 案件の開発ロケーションリストを初期化
+//			ArrayList<DevelopLocation> developLocationList = new ArrayList<DevelopLocation>();
+//			// 案件の要求詳細リストを初期化
+//			ArrayList<DemandDescription> demandDescriptionList = new ArrayList<DemandDescription>();
+//			DevelopLocation developLocation = null;
+//			DemandDescription demandDescription = null;
 			opportunityId = opportunityObj.getField("Id").asString();
-			// 案件の開発ロケーション情報を取得
-			soqlLocationSearch = "select Location__c , WorkingRate__c, Opportunity__c FROM DevelopmentLocation__c where Opportunity__c = '"
-					+ opportunityId + "'";
-
-			Iterator<RichSObject> locationQueryResultItr = salesforceService
-					.query(soqlLocationSearch);
-
-			while (locationQueryResultItr.hasNext()) {
-
-				RichSObject locationObj = locationQueryResultItr.next();
-
-				developLocation = new DevelopLocation();
-
-				developLocation.setLocation(locationObj.getField("Location__c")
-						.asString());
-				developLocation.setWorkingRate(locationObj.getField(
-						"WorkingRate__c").asString());
-
-				developLocationList.add(developLocation);
-			}
-			opportunity.setDevelopLocationList(developLocationList);
-
-			// 案件の要求詳細を取得
-			soalDemandDescription = "select id, DetailName__c, Category__c, Remarks__c, ProjectName__c FROM RequestDetailedList__c where ProjectName__c = '"
-					+ opportunityId + "'";
-
-			Iterator<RichSObject> demandDescriptionQueryResultItr = salesforceService
-					.query(soalDemandDescription);
-
-			while (demandDescriptionQueryResultItr.hasNext()) {
-
-				RichSObject demandDescriptionObj = demandDescriptionQueryResultItr
-						.next();
-
-				demandDescription = new DemandDescription();
-
-				demandDescription.setCategory(demandDescriptionObj.getField(
-						"Category__c").asString());
-				demandDescription.setDetailName(demandDescriptionObj.getField(
-						"DetailName__c").asString());
-				demandDescription.setRemarks(demandDescriptionObj.getField(
-						"Remarks__c").asString());
-
-				demandDescriptionList.add(demandDescription);
-
-			}
-			opportunity.setDemandDescriptionList(demandDescriptionList);
+// SFDCのAPIリクエスト上限5000数を増えないように、お先に無用になる		
+//			// 案件の開発ロケーション情報を取得
+//			soqlLocationSearch = "select Location__c , WorkingRate__c, Opportunity__c FROM DevelopmentLocation__c where Opportunity__c = '"
+//					+ opportunityId + "'";
+//
+//			Iterator<RichSObject> locationQueryResultItr = salesforceService
+//					.query(soqlLocationSearch);
+//
+//			while (locationQueryResultItr.hasNext()) {
+//
+//				RichSObject locationObj = locationQueryResultItr.next();
+//
+//				developLocation = new DevelopLocation();
+//
+//				developLocation.setLocation(locationObj.getField("Location__c")
+//						.asString());
+//				developLocation.setWorkingRate(locationObj.getField(
+//						"WorkingRate__c").asString());
+//
+//				developLocationList.add(developLocation);
+//			}
+//			opportunity.setDevelopLocationList(developLocationList);
+//
+//			// 案件の要求詳細を取得
+//			soalDemandDescription = "select id, DetailName__c, Category__c, Remarks__c, ProjectName__c FROM RequestDetailedList__c where ProjectName__c = '"
+//					+ opportunityId + "'";
+//
+//			Iterator<RichSObject> demandDescriptionQueryResultItr = salesforceService
+//					.query(soalDemandDescription);
+//
+//			while (demandDescriptionQueryResultItr.hasNext()) {
+//
+//				RichSObject demandDescriptionObj = demandDescriptionQueryResultItr
+//						.next();
+//
+//				demandDescription = new DemandDescription();
+//
+//				demandDescription.setCategory(demandDescriptionObj.getField(
+//						"Category__c").asString());
+//				demandDescription.setDetailName(demandDescriptionObj.getField(
+//						"DetailName__c").asString());
+//				demandDescription.setRemarks(demandDescriptionObj.getField(
+//						"Remarks__c").asString());
+//
+//				demandDescriptionList.add(demandDescription);
+//
+//			}
+//			opportunity.setDemandDescriptionList(demandDescriptionList);
 			// 取得した案件情報を設定する
 			opportunity.setOpportunityId(opportunityId);
 			opportunity.setName(opportunityObj.getField("Name").asString());
@@ -125,7 +128,26 @@ public class OpportunityDaoImpl implements OpportunityDao {
 			opportunity.setType(opportunityObj.getField("Type").asString());
 			opportunity.setLocation(opportunityObj.getField("location__c")
 					.asString());
-			opportunity.setAmount(opportunityObj.getField("Amount").asString());
+			opportunity.setAmount(opportunityObj.getField("Amount")
+					.asString());
+			
+			// 売り見込の設定
+//			RichField rAmount = opportunityObj.getField("Amount");
+//			if (("".equals(rAmount) || (rAmount == null))) {
+//				opportunity.setAmount(0);
+//				
+//			} else {
+//				
+//				strAmount = opportunityObj.getField("Amount").asString().toString();
+//				try {
+//					float fAmount = Float.valueOf(strAmount).floatValue();
+//					opportunity.setAmount(fAmount);
+//				}catch(NumberFormatException e){
+//					throw e;
+//				}
+//				
+//			}
+			
 			opportunity.setTimeCompute(opportunityObj
 					.getField("timeCompute__c").asString());
 			opportunity.setComputeLowestCon(opportunityObj.getField(

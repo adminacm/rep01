@@ -66,9 +66,7 @@ table.gridtable td {
                        <td>プロジェクト責任者</td>
                        <td>備考</td>
                        <td>想定されるリスク</td>
-                       <td>開発ロケーション</td>
-                       <td>要求詳細</td>
-                      </tr>
+                    </tr>
                     </thead>
                     <tbody>                     
                       <c:if test="${!empty opportunityList}">
@@ -91,11 +89,16 @@ table.gridtable td {
                        <td>${opportunity.industryCategory}</td>
                        <td>${opportunity.type}</td>
                        <td>${opportunity.location}</td>
+                       <c:if test="${opportunity.amount == null}">
+                       <td></td>
+                       </c:if>
+                       <c:if test="${opportunity.amount != null}">
                        <td>￥${opportunity.amount}</td>
+                       </c:if>
                        <c:if test="${opportunity.timeCompute == 'true'}">
                        <td>あり</td>
                        </c:if>
-                       <c:if test="${opportunity.timeCompute == 'flase'}">
+                       <c:if test="${opportunity.timeCompute == 'false'}">
                        <td>なし</td>
                        </c:if>
                        <td>${opportunity.computeLowestCon}</td>
@@ -109,8 +112,6 @@ table.gridtable td {
                        <td>${opportunity.projectResPerson}</td>
                        <td>${opportunity.demand}</td>
                        <td>${opportunity.anticipateRisk}</td>
-                       <td>${opportunity.outputDevelopLocationText}</td>
-                       <td>${opportunity.outputDemandDescriptionText}</td>
                       </tr>
                     </c:forEach>
                     </c:if>                    

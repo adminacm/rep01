@@ -1,6 +1,8 @@
 package com.opportunity.bean;
 
 import java.util.ArrayList;
+import com.opportunity.bean.DemandDescription;
+import com.opportunity.bean.DevelopLocation;
 
 /**
  * @author xiongyl
