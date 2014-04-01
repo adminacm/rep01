@@ -1,12 +1,12 @@
 package com.opportunity.service;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.opportunity.bean.DemandDescription;
-import com.opportunity.bean.DevelopLocation;
 import com.opportunity.bean.Opportunity;
 import com.opportunity.dao.OpportunityDao;
 import com.opportunity.dao.OpportunityDaoImpl;
@@ -22,6 +22,12 @@ public class OpportunityServiceImpl implements OpportunityService {
 
 		ArrayList<Opportunity> opportunityList = opportunityDao
 				.getOpportunityList();
+		
+		for (Opportunity opp : opportunityList) {
+			
+			opp.setAmount(this.toCommaFormat(opp.getAmount()));;
+			
+		}
 		// SFDCのAPIリクエスト上限5000数を増えないように、お先に無用になる	
 //		String strDevelopLocationText = "";
 //		String strDemandDescriptionText = "";
@@ -89,4 +95,25 @@ public class OpportunityServiceImpl implements OpportunityService {
 		return opportunityList;
 	}
 
+	/**
+	 * 数値を文字列に変換する。<BR>
+	 * 　1. 引数の数値をICU4Jライブラリ（DecimalFormat）を利用し<BR>
+	 *  　  カンマ編集した文字列に変換し返却する。<BR>
+	 * 
+	 * @param double カンマ編集する数値
+	 * @param int 小数点以下の桁数。0以下の数値は無視される。
+	 * @return String 変換文字列
+	 */
+	private String toCommaFormat(String amount) {
+		
+		DecimalFormat df = new DecimalFormat("#,##0");
+		
+		if (!StringUtils.isEmpty(amount)) {
+			// 数値を文字列に変換する
+			return df.format(Double.parseDouble(amount));
+		}
+
+		return StringUtils.EMPTY;
+	}
+	
 }

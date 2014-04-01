@@ -53,7 +53,7 @@ table.gridtable td {
                        <td>業種</td>
                        <td>種別</td>
                        <td>勤務地</td>
-                       <td>売り見込</td>
+                       <td>売上見込</td>
                        <td>時間精算あり</td>
                        <td>時間条件下限</td>
                        <td>時間条件上限</td>
@@ -89,10 +89,10 @@ table.gridtable td {
                        <td>${opportunity.industryCategory}</td>
                        <td>${opportunity.type}</td>
                        <td>${opportunity.location}</td>
-                       <c:if test="${opportunity.amount == null}">
+                       <c:if test="${ empty opportunity.amount}">
                        <td></td>
                        </c:if>
-                       <c:if test="${opportunity.amount != null}">
+                       <c:if test="${!empty opportunity.amount}">
                        <td>￥${opportunity.amount}</td>
                        </c:if>
                        <c:if test="${opportunity.timeCompute == 'true'}">
