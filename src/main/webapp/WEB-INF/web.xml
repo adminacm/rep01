@@ -28,7 +28,7 @@
     </filter-mapping>
 
     <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>sfdc/opportunity</welcome-file>
     </welcome-file-list>
 
     <error-page>

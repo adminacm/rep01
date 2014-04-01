@@ -9,13 +9,12 @@ import org.springframework.stereotype.Service;
 
 import com.opportunity.bean.Opportunity;
 import com.opportunity.dao.OpportunityDao;
-import com.opportunity.dao.OpportunityDaoImpl;
 
 @Service
 public class OpportunityServiceImpl implements OpportunityService {
 
 	@Autowired
-	private OpportunityDao opportunityDao = new OpportunityDaoImpl();
+	private OpportunityDao opportunityDao;
 
 	@Override
 	public ArrayList<Opportunity> getOpportunityList() {
